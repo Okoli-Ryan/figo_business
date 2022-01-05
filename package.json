@@ -1,0 +1,11 @@
+{
+  "name": "figocard_business",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@vanillaes/csv": "^3.0.1",
+    "bootstrap": "^5.1.3",
+    "jQuery": "^1.7.4"
+  }
+}
