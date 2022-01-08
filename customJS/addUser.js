@@ -5,6 +5,7 @@ let emailArray = [];
 let emailInput = document.querySelector("#email");
 
 $("#form1").on("submit", function (e) {
+  console.log("ews");
   e.preventDefault();
 
   let validEmail = true;
@@ -12,7 +13,8 @@ $("#form1").on("submit", function (e) {
   emailArray.forEach(function (el) {
     if (el.toLowerCase().trim() === emailInput.value) {
       validEmail = false;
-      console.log("email already in use");
+      $(".toast-body").html("Email is already in use");
+      $(".toast").toast("show");
       return;
     }
   });
@@ -33,28 +35,3 @@ $("#form1").on("submit", function (e) {
   $("#form1")[0].reset();
   console.log(csvUser);
 });
-
-export function emailValidate(p) {
-  let j = 1;
-  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-  for (let i = 0; i < p.length - 1; i++) {
-    while (j < p.length) {
-      if (p[i] === p[j]) {
-        console.log(`index ${i} and ${j} are equal`);
-        return false;
-      }
-      j++;
-    }
-    j = i + 2;
-  }
-
-  for (let i = 0; i < p.length; i++) {
-    if (!emailRegex.test(p[i])) {
-      console.log(`email at index ${i} is invalid`);
-      return false;
-    }
-  }
-
-  return true;
-}

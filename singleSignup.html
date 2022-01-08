@@ -23,7 +23,7 @@
     />
     <link rel="stylesheet" href="/dist/css/global.css" />
   </head>
-  <section class="h-100 h-custom gradient-custom-2" style="min-height: 100vh;">
+  <section class="h-100 h-custom gradient-custom-2" style="min-height: 100vh">
     <div class="position-fixed end-0 p-3" style="z-index: 11">
       <div
         class="toast"
@@ -48,7 +48,11 @@
             <div class="card-body p-0">
               <div class="row g-0">
                 <div class="col-lg-6">
-                  <form method="post" class="p-5 form has-validation" id="form1">
+                  <form
+                    method="post"
+                    class="p-5 form has-validation"
+                    id="form1"
+                  >
                     <h3 class="fw-normal mb-5" style="color: #4835d4">
                       Register Employees
                     </h3>
@@ -113,7 +117,6 @@
                           id="telephone"
                           pattern="^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
                           title="Phone number must start with a + sign "
-                            
                           class="form-control form-control-lg"
                         />
                         <label class="form-label" for="work-phone-number"
@@ -154,14 +157,12 @@
                           type="submit"
                           class="btn btn-primary btn-md"
                           id="add-button"
-                          style="width: 100%;"
+                          style="width: 100%"
                           data-mdb-ripple-color="dark"
                         >
                           <i class="fa fa-plus"></i>
                         </button>
                       </div>
-
-                      
                     </div>
                   </form>
                 </div>
@@ -224,6 +225,7 @@
   <script>
     $("#telephone").intlTelInput({});
   </script>
+
   <script type="module">
     import { parse } from "/customJS/vanillaes.js";
 
@@ -231,13 +233,11 @@
       var data = [];
       var rows = document.querySelectorAll("table tr");
 
-      console.log(rows);
-
       for (var i = 1; i < rows.length; i++) {
         var row = [],
           cols = rows[i].querySelectorAll("td, th");
 
-        for (var j = 0; j < cols.length; j++) {
+        for (var j = 1; j < cols.length; j++) {
           row.push(cols[j].innerText);
         }
 
@@ -245,11 +245,12 @@
       }
 
       let result = data.join("\n");
-      
+
       console.log(parse(result + "\n"));
     };
     document.querySelector("#register").addEventListener("click", getCSV);
   </script>
   <script type="module" src="/customJS/createTable.js"></script>
   <script type="module" src="/customJS/addUser.js"></script>
+
 </html>

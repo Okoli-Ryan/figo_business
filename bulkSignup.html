@@ -20,7 +20,10 @@
     />
     <link rel="stylesheet" href="/dist/css/global.css" />
   </head>
-  <section class="h-100 h-custom gradient-custom-2 d-flex align-items-center" style="min-height: 100vh;">
+  <section
+    class="h-100 h-custom gradient-custom-2 d-flex align-items-center"
+    style="min-height: 100vh"
+  >
     <div class="position-fixed end-0 p-3" style="z-index: 11">
       <div
         class="toast"
@@ -51,11 +54,8 @@
                     </h3>
 
                     <div class="row">
-                      
-
                       <div class="col-12 mb-4 pb-2">
                         <div class="d-flex">
-                          
                           <label
                             for="csv-button"
                             class="btn btn-outline-primary btn-md w-100"
@@ -80,7 +80,7 @@
                     <table class="table table-striped" id="table">
                       <thead>
                         <tr>
-                          <!-- <th scope="col">#</th> -->
+                          <th scope="col">#</th>
                           <th scope="col">First Name</th>
                           <th scope="col">Last Name</th>
                           <th scope="col">Phone Number</th>
@@ -105,7 +105,6 @@
                       </button>
                     </div>
                   </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -128,60 +127,21 @@
 
   <script type="module" src="/customJS/edittableTable.js"></script>
   <script type="module" src="/customJS/createTable.js"></script>
+  <script type="module" src="/customJS/validate.js"></script>
 
   <script type="module">
-    import { parse } from "/customJS/vanillaes.js";
-    import { handleFileSelect } from "/customJS/dragFile.js"
-    import { emailValidate } from "/customJS/addUser.js"
+    import { handleFileSelect } from "/customJS/dragFile.js";
+    import { getCSV } from "/customJS/csv.js"
+
 
     const csvButton = document.querySelector("#csv-button");
-
-    
 
     document
       .getElementById("csv-button")
       .addEventListener("change", handleFileSelect, false);
 
-    const getCSV = () => {
-      var data = [];
-      let emailArray = []
-      const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g
-      var rows = document.querySelectorAll("table tr");
-
-      for (var i = 1; i < rows.length; i++) {
-        var row = [],
-          cols = rows[i].querySelectorAll("td, th");
-
-          emailArray.push(cols[4].innerHTML)
-        for (var j = 0; j < cols.length; j++) {
-          row.push(cols[j].innerText);
-
-          // Validation
-
-          if(!cols[j].innerText || cols[j].innerText === "")
-          console.log(`element at row ${i} column ${j} cannot be empty`)
-
-          if(j === 2 && phoneNumberRegex.test(cols[j]))
-          console.log(`element at row ${i} column ${j+1} is not a phone number`)
-
-          if(j === 3 && phoneNumberRegex.test(cols[j]))
-          console.log(`element at row ${i} column ${j+1} is not a phone number`)
-        }
-
-        data.push(`"${row.join(",")}"`);
-      }
-
-      if (!emailValidate(emailArray))
-      return
-
-      let result = data.join("\n")
-      // console.log(emailArray)
-      // console.log(parse(`"header1,header2,header3"\n"aaa,bbb,ccc"\n"zzz,yyy,xxx"`)
-      // )};
-      console.log(parse(result+"\n"))
-    }
-    document.querySelector("#register").addEventListener("click", getCSV);
     
+    document.querySelector("#register").addEventListener("click", getCSV);
   </script>
   <script type="module" src="customJS/dragFile.js"></script>
 </html>

@@ -43,6 +43,7 @@ export function handleFileSelect(evt, dropped = true) {
       const parsed = parse(e.target.result);
       // console.log(parsed);
       if (parsed.length > 100) {
+        $(".toast-body").html("CSV file must not exceed 100 entries");
         $(".toast").toast("show");
         return;
       }
