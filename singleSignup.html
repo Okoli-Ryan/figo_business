@@ -11,7 +11,10 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-
+    <link
+      rel="stylesheet"
+      href="/intl-tel-input-master/build/css/intlTelInput.css"
+    />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -20,7 +23,7 @@
     />
     <link rel="stylesheet" href="/dist/css/global.css" />
   </head>
-  <section class="h-100 h-custom gradient-custom-2">
+  <section class="h-100 h-custom gradient-custom-2" style="min-height: 100vh;">
     <div class="position-fixed end-0 p-3" style="z-index: 11">
       <div
         class="toast"
@@ -45,7 +48,7 @@
             <div class="card-body p-0">
               <div class="row g-0">
                 <div class="col-lg-6">
-                  <div class="p-5">
+                  <form method="post" class="p-5 form has-validation" id="form1">
                     <h3 class="fw-normal mb-5" style="color: #4835d4">
                       Register Employees
                     </h3>
@@ -55,7 +58,9 @@
                         <div class="form-outline">
                           <input
                             type="text"
+                            name="first-name"
                             id="first-name"
+                            required="true"
                             class="form-control form-control-lg"
                           />
                           <label class="form-label" for="first-name"
@@ -68,6 +73,8 @@
                           <input
                             type="text"
                             id="last-name"
+                            name="last-name"
+                            required="true"
                             class="form-control form-control-lg"
                           />
                           <label class="form-label" for="last-name"
@@ -78,72 +85,85 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-md-5 mb-4 pb-2">
+                      <div class="col mb-4 pb-2">
                         <div class="form-outline form-white">
                           <input
-                            type="number"
-                            id="country-code"
+                            type="tel"
+                            required="true"
                             class="form-control form-control-lg"
-                            placeholder="+"
+                            pattern="^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
+                            title="Phone number must start with a + sign "
+                            placeholder=""
+                            name="phone-number"
+                            id="telephone"
                           />
-                          <label class="form-label" for="country-code"
-                            >Code +</label
-                          >
                         </div>
-                      </div>
-                      <div class="col-md-7 mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <input
-                            type="number"
-                            id="phone-number"
-                            class="form-control form-control-lg"
-                          />
-                          <label class="form-label" for="phone-number"
-                            >Phone Number</label
-                          >
-                        </div>
+                        <label class="form-label" for="telephone"
+                          >Phone number</label
+                        >
                       </div>
                     </div>
 
-                    <div class="mb-4">
-                      <div class="form-outline form-white">
+                    <div class="row mb-4">
+                      <div class="form-outline">
+                        <input
+                          type="tel"
+                          required="true"
+                          name="work-phone-number"
+                          id="telephone"
+                          pattern="^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
+                          title="Phone number must start with a + sign "
+                            
+                          class="form-control form-control-lg"
+                        />
+                        <label class="form-label" for="work-phone-number"
+                          >Work number</label
+                        >
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <div class="form-outline">
                         <input
                           type="email"
+                          name="email"
+                          required="true"
                           id="email"
                           class="form-control form-control-lg"
                         />
-                        <label class="form-label" for="email">Your Email</label>
+                        <label class="form-label" for="email">Email</label>
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <div class="form-outline">
+                        <input
+                          type="text"
+                          name="position"
+                          id="position"
+                          required="true"
+                          class="form-control form-control-lg"
+                        />
+                        <label class="form-label" for="position"
+                          >Position</label
+                        >
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-sm-6 mb-4 pb-2">
+                      <div class="col mb-4 pb-2">
                         <button
-                          type="button"
+                          type="submit"
                           class="btn btn-primary btn-md"
                           id="add-button"
+                          style="width: 100%;"
                           data-mdb-ripple-color="dark"
                         >
                           <i class="fa fa-plus"></i>
                         </button>
                       </div>
 
-                      <div class="col-sm-6 mb-4 pb-2">
-                        <div>
-                          <label
-                            for="csv-button"
-                            class="btn btn-outline-primary btn-md w-100"
-                            >Upload CSV</label
-                          >
-                          <input
-                            style="visibility: hidden; display: none"
-                            type="file"
-                            id="csv-button"
-                          />
-                        </div>
-                      </div>
+                      
                     </div>
-                  </div>
+                  </form>
                 </div>
                 <div class="col-lg-6 px-4 mt-5">
                   <div
@@ -153,16 +173,30 @@
                     <table class="table table-striped" id="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
+                          <!-- <th scope="col">#</th> -->
                           <th scope="col">First Name</th>
                           <th scope="col">Last Name</th>
-                          <th scope="col">Country Code</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Work Phone Number</th>
                           <th scope="col">Email</th>
+                          <th scope="col">Position</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
                     </table>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-4 pb-2">
+                      <button
+                        style="width: 100%"
+                        type="button"
+                        class="btn btn-outline-primary btn-md"
+                        id="register"
+                        data-mdb-ripple-color="dark"
+                      >
+                        Register Users
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -185,66 +219,37 @@
   ></script>
 
   <script src="/customJS/edittableTable.js"></script>
-  <script src="/customJS/createTable.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@grabzit/js@3.5.2/grabzit.min.js"></script>
+  <script src="/intl-tel-input-master/build/js/intlTelInput-jquery.min.js"></script>
 
+  <script>
+    $("#telephone").intlTelInput({});
+  </script>
   <script type="module">
-    import { parse } from "./node_modules/@vanillaes/csv/index.min.js";
-
-    const csvButton = document.querySelector("#csv-button");
-
-    function handleFileSelect(evt) {
-      let files = evt.target.files; // FileList object
-
-      // use the 1st file from the list
-      let f = null;
-      f = files[0];
-
-      let reader = new FileReader();
-
-      // Closure to capture the file information.
-      reader.onload = (function (theFile) {
-        return function (e) {
-          const parsed = parse(e.target.result);
-          // console.log(parsed);
-          if (parsed.length > 100) {
-            $(".toast").toast("show");
-            return;
-          }
-          clearTable();
-          createTable(parsed);
-          $("#table").editableTableWidget();
-        };
-      })(f);
-
-      // Read in the image file as a data URL.
-      reader.readAsText(f);
-    }
-
-    document
-      .getElementById("csv-button")
-      .addEventListener("change", handleFileSelect, false);
+    import { parse } from "/customJS/vanillaes.js";
 
     const getCSV = () => {
       var data = [];
       var rows = document.querySelectorAll("table tr");
 
+      console.log(rows);
+
       for (var i = 1; i < rows.length; i++) {
         var row = [],
           cols = rows[i].querySelectorAll("td, th");
 
-        for (var j = 1; j < cols.length; j++) {
+        for (var j = 0; j < cols.length; j++) {
           row.push(cols[j].innerText);
         }
 
         data.push(`"${row.join(",")}"`);
       }
 
-      let result = data.join("\n")
-      // console.log(parse(`"header1,header2,header3"\n"aaa,bbb,ccc"\n"zzz,yyy,xxx"`)
-      // )};
-      console.log(parse(result))
-    }
-    document.querySelector("#add-button").addEventListener("click", getCSV);
+      let result = data.join("\n");
+      
+      console.log(parse(result + "\n"));
+    };
+    document.querySelector("#register").addEventListener("click", getCSV);
   </script>
+  <script type="module" src="/customJS/createTable.js"></script>
+  <script type="module" src="/customJS/addUser.js"></script>
 </html>

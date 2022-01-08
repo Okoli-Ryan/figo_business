@@ -20,7 +20,7 @@
     />
     <link rel="stylesheet" href="/dist/css/global.css" />
   </head>
-  <section class="h-100 h-custom gradient-custom-2">
+  <section class="h-100 h-custom gradient-custom-2 d-flex align-items-center" style="min-height: 100vh;">
     <div class="position-fixed end-0 p-3" style="z-index: 11">
       <div
         class="toast"
@@ -42,94 +42,20 @@
             class="card card-registration card-registration-2"
             style="border-radius: 15px"
           >
-            <div class="card-body p-0">
+            <div class="card-body p-0 drop-area">
               <div class="row g-0">
                 <div class="col-lg-6">
                   <div class="p-5">
                     <h3 class="fw-normal mb-5" style="color: #4835d4">
-                      Register Employees
+                      Bulk Register
                     </h3>
 
                     <div class="row">
-                      <div class="col-md-6 mb-4 pb-2">
-                        <div class="form-outline">
-                          <input
-                            type="text"
-                            id="first-name"
-                            class="form-control form-control-lg"
-                          />
-                          <label class="form-label" for="first-name"
-                            >First name</label
-                          >
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-4 pb-2">
-                        <div class="form-outline">
-                          <input
-                            type="text"
-                            id="last-name"
-                            class="form-control form-control-lg"
-                          />
-                          <label class="form-label" for="last-name"
-                            >Last name</label
-                          >
-                        </div>
-                      </div>
-                    </div>
+                      
 
-                    <div class="row">
-                      <div class="col-md-5 mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <input
-                            type="number"
-                            id="country-code"
-                            class="form-control form-control-lg"
-                            placeholder="+"
-                          />
-                          <label class="form-label" for="country-code"
-                            >Code +</label
-                          >
-                        </div>
-                      </div>
-                      <div class="col-md-7 mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <input
-                            type="number"
-                            id="phone-number"
-                            class="form-control form-control-lg"
-                          />
-                          <label class="form-label" for="phone-number"
-                            >Phone Number</label
-                          >
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="mb-4">
-                      <div class="form-outline form-white">
-                        <input
-                          type="email"
-                          id="email"
-                          class="form-control form-control-lg"
-                        />
-                        <label class="form-label" for="email">Your Email</label>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-sm-6 mb-4 pb-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary btn-md"
-                          id="add-button"
-                          data-mdb-ripple-color="dark"
-                        >
-                          <i class="fa fa-plus"></i>
-                        </button>
-                      </div>
-
-                      <div class="col-sm-6 mb-4 pb-2">
-                        <div>
+                      <div class="col-12 mb-4 pb-2">
+                        <div class="d-flex">
+                          
                           <label
                             for="csv-button"
                             class="btn btn-outline-primary btn-md w-100"
@@ -141,6 +67,7 @@
                             id="csv-button"
                           />
                         </div>
+                        <p class="text-center">or drag and drop a .CSV file</p>
                       </div>
                     </div>
                   </div>
@@ -153,16 +80,31 @@
                     <table class="table table-striped" id="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
+                          <!-- <th scope="col">#</th> -->
                           <th scope="col">First Name</th>
                           <th scope="col">Last Name</th>
-                          <th scope="col">Country Code</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Work Phone Number</th>
                           <th scope="col">Email</th>
+                          <th scope="col">Position</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
                     </table>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-4 pb-2">
+                      <button
+                        style="width: 100%"
+                        type="button"
+                        class="btn btn-outline-primary btn-md"
+                        id="register"
+                        data-mdb-ripple-color="dark"
+                      >
+                        Register Users
+                      </button>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -184,42 +126,17 @@
     crossorigin="anonymous"
   ></script>
 
-  <script src="/customJS/edittableTable.js"></script>
-  <script src="/customJS/createTable.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@grabzit/js@3.5.2/grabzit.min.js"></script>
+  <script type="module" src="/customJS/edittableTable.js"></script>
+  <script type="module" src="/customJS/createTable.js"></script>
 
   <script type="module">
-    import { parse } from "./node_modules/@vanillaes/csv/index.min.js";
+    import { parse } from "/customJS/vanillaes.js";
+    import { handleFileSelect } from "/customJS/dragFile.js"
+    import { emailValidate } from "/customJS/addUser.js"
 
     const csvButton = document.querySelector("#csv-button");
 
-    function handleFileSelect(evt) {
-      let files = evt.target.files; // FileList object
-
-      // use the 1st file from the list
-      let f = null;
-      f = files[0];
-
-      let reader = new FileReader();
-
-      // Closure to capture the file information.
-      reader.onload = (function (theFile) {
-        return function (e) {
-          const parsed = parse(e.target.result);
-          // console.log(parsed);
-          if (parsed.length > 100) {
-            $(".toast").toast("show");
-            return;
-          }
-          clearTable();
-          createTable(parsed);
-          $("#table").editableTableWidget();
-        };
-      })(f);
-
-      // Read in the image file as a data URL.
-      reader.readAsText(f);
-    }
+    
 
     document
       .getElementById("csv-button")
@@ -227,24 +144,44 @@
 
     const getCSV = () => {
       var data = [];
+      let emailArray = []
+      const phoneNumberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g
       var rows = document.querySelectorAll("table tr");
 
       for (var i = 1; i < rows.length; i++) {
         var row = [],
           cols = rows[i].querySelectorAll("td, th");
 
-        for (var j = 1; j < cols.length; j++) {
+          emailArray.push(cols[4].innerHTML)
+        for (var j = 0; j < cols.length; j++) {
           row.push(cols[j].innerText);
+
+          // Validation
+
+          if(!cols[j].innerText || cols[j].innerText === "")
+          console.log(`element at row ${i} column ${j} cannot be empty`)
+
+          if(j === 2 && phoneNumberRegex.test(cols[j]))
+          console.log(`element at row ${i} column ${j+1} is not a phone number`)
+
+          if(j === 3 && phoneNumberRegex.test(cols[j]))
+          console.log(`element at row ${i} column ${j+1} is not a phone number`)
         }
 
         data.push(`"${row.join(",")}"`);
       }
 
+      if (!emailValidate(emailArray))
+      return
+
       let result = data.join("\n")
+      // console.log(emailArray)
       // console.log(parse(`"header1,header2,header3"\n"aaa,bbb,ccc"\n"zzz,yyy,xxx"`)
       // )};
-      console.log(parse(result))
+      console.log(parse(result+"\n"))
     }
-    document.querySelector("#add-button").addEventListener("click", getCSV);
+    document.querySelector("#register").addEventListener("click", getCSV);
+    
   </script>
+  <script type="module" src="customJS/dragFile.js"></script>
 </html>

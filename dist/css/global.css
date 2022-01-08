@@ -3,9 +3,9 @@
   border: none;
 }
 
-@media (min-width: 990px) {
+@media (min-width: 1025px) {
   .h-custom {
-    height: 100vh !important;
+    min-height: 100vh !important;
   }
 }
 
@@ -20,9 +20,25 @@
   top: 13px;
 }
 
+.iti {
+  width: 100% !important;
+}
+
+.highlight {
+  border-color: purple !important;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.drop-area {
+  border: 4px dashed #ccc !important;
+}
+
+#register {
+  display: none;
+}
+
 .gradient-custom-2 {
   /* fallback for old browsers */
-  background: #a1c4fd;
   /* Chrome 10-25, Safari 5.1-6 */
   background: -webkit-gradient(linear, left top, right top, from(#13c394), to(#7df2d3));
   background: linear-gradient(to right, #13c394, #7df2d3);
@@ -45,16 +61,5 @@
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
 }
 /*# sourceMappingURL=global.css.map */
